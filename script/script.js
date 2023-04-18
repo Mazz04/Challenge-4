@@ -24,7 +24,7 @@ class Product{
     const cardsContainer = document.getElementById("cards-container");
     cardsContainer.innerHTML = "";
     const cards = productsArray.map((product) => `
-    <ul class="cards">
+
     <li>
       <a class="card" onclick="this.classList.toggle('expanded')">
         <img src="https://pm1.narvii.com/6720/25e80ad037ae1298d4be1d8b0b6a741c8c180347_00.jpg" class="card__image" alt="" />
@@ -41,7 +41,7 @@ class Product{
         </div>
       </a>      
     </li>  
-  </ul>
+
     `);
     cardsContainer.insertAdjacentHTML("beforeend", cards.join(""));
   }
