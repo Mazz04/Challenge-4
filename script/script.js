@@ -1,14 +1,53 @@
-class Product{
+class PokemonAPI {
+  constructor() {
+    if (PokemonAPI.instance) {
+      return PokemonAPI.instance;
+    }
+    this.POKEMON_API_BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
+    PokemonAPI.instance = this;
+  }
+
+  async fetchData(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+
+  async fetchPokemonData(pokemon) {
+    const url = `${this.POKEMON_API_BASE_URL}${pokemon}/`;
+    const data = await this.fetchData(url);
+    const stats = data.stats.map((stat) => {
+      return {
+        name: stat.stat.name,
+        base_stat: stat.base_stat,
+      };
+    });
+    const product = new Product(data.id, data.name, data.base_experience, data.sprites.front_default, stats);
+    return product;
+  }
+
+  async fetchRandomPokemonData() {
+    const pokemonIds = [];
+    while (pokemonIds.length < 10) {
+      const id = getRandomInt(1, 152);
+      if (!pokemonIds.includes(id)) {
+        pokemonIds.push(id);
+      }
+    }
+    const products = await Promise.all(pokemonIds.map((id) => this.fetchPokemonData(id)));
+    return products;
+  }
+}
+
+class Product {
   constructor(id, name, xpbase, image, stats) {
     this.id = id;
     this.name = name;
     this.xpbase = xpbase;
     this.image = image;
     this.stats = stats;
-  } 
+  }
 }
-
-const products = [];
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -33,7 +72,7 @@ function renderCards(productsArray) {
               <img class="card__thumb" src="${product.image}" alt="" />
               <div class="card__header-text">
                 <h3 class="card__title">${product.name}</h3>            
-                <span class="card__status">ID: ${product.id} | XP Base: ${product.xpbase}</span>
+                <span class="card__status">Pokedex: ${product.id} | XP Base: ${product.xpbase}</span>
               </div>
             </div>
             <p class="card__description">${statList}</p>
@@ -45,29 +84,15 @@ function renderCards(productsArray) {
   cardsContainer.insertAdjacentHTML("beforeend", cards.join(""));
 }
 
-async function fetchPokemonData(pokemon) {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`);
-  const data = await response.json();
-  const stats = data.stats.map((stat) => {
-    return {
-      name: stat.stat.name,
-      base_stat: stat.base_stat,
-    };
-  });
-  const product = new Product(data.id, data.name, data.base_experience, data.sprites.front_default, stats);
-  return product;
-}
+const pokemonAPI = new PokemonAPI();
 
-async function fetchRandomPokemonData() {
-  const pokemonIds = [];
-  while (pokemonIds.length < 10) {
-    const id = getRandomInt(1, 152);
-    if (!pokemonIds.includes(id)) {
-      pokemonIds.push(id);
-    }
-  }
-  const products = await Promise.all(pokemonIds.map(fetchPokemonData));
+async function fetchAndRenderData() {
+  const products = await pokemonAPI.fetchRandomPokemonData();
   renderCards(products);
 }
 
-fetchRandomPokemonData();
+fetchAndRenderData();
+
+setInterval(() => {
+  console.log ("help, we are a group of handicapped people exploited for work without pay")
+}, 2000);
