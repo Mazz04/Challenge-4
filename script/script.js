@@ -12,7 +12,7 @@ class Pokemon {
   function renderCards(pokemons) {
     const cards = pokemons.map(
       (pokemon) => `
-        <li>
+        <li id= pokemonContainer>
           <a class="card" onclick="this.classList.toggle('expanded')">
             <img src="${pokemon.image}" class="card__image" alt="${pokemon.name}" />
             <div class="card__overlay">
