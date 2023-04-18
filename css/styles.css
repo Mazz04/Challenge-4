@@ -13,12 +13,15 @@
   }
   
   .cards {
+    
+    width: 80%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin: 4rem 5vw;
     padding: 0;
     list-style-type: none;
+    justify-content: center;
   }
   
   .card {
@@ -117,3 +120,25 @@
     -webkit-line-clamp: 3;
     overflow: hidden;
   }
+
+  #body{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  #pokemonContainer{
+
+    max-width: 85%;
+  }
+
+  #cards-container{
+
+    padding-left: 5%;
+
+
+  }
+
+  
