@@ -1,28 +1,39 @@
-class Pokemon {
-    constructor(id, name, xpbase, image) {
-      this.id = id;
-      this.name = name;
-      this.xpbase = xpbase;
-      this.image = image;
+class Product{
+  constructor(id, name, xpbase, image, stats) {
+    this.id = id;
+    this.name = name;
+    this.xpbase = xpbase;
+    this.image = image;
+    this.stats = stats;
+  } 
+}
+
+const products = [];
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function renderCards(productsArray) {
+  const cardsContainer = document.getElementById("cards-container");
+  cardsContainer.innerHTML = "";
+  const cards = productsArray.map((product) => {
+    let statList = "";
+    for (let i = 0; i < product.stats.length; i++) {
+      const stat = product.stats[i];
+      statList += `${stat.name}: ${stat.base_stat} `;
     }
-  }
-  
-  const pokemonContainer = document.getElementById("cards-container");
-  
-  function renderCards(pokemons) {
-    const cards = pokemons.map(
-      (pokemon) => `
-        <li>
-          <a class="card" onclick="this.classList.toggle('expanded')">
-            <img src="${pokemon.image}" class="card__image" alt="${pokemon.name}" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-                <img class="card__thumb" src="${pokemon.image}" alt="${pokemon.name}" />
-                <div class="card__header-text">
-                  <h3 class="card__title">${pokemon.name}</h3>            
-                  <span class="card__status">${pokemon.xpbase} XP</span>
-                </div>
+    return `
+      <li>
+        <a class="card" onclick="this.classList.toggle('expanded')">
+          <img src="${product.image}" class="card__image" alt="" />
+          <div class="card__overlay">
+            <div class="card__header">
+              <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
+              <img class="card__thumb" src="${product.image}" alt="" />
+              <div class="card__header-text">
+                <h3 class="card__title">${product.name}</h3>            
+                <span class="card__status">ID: ${product.id} | XP Base: ${product.xpbase}</span>
               </div>
             </div>
             <p class="card__description">${statList}</p>
