@@ -125,8 +125,11 @@
     width: 35px;
     height: 35px;      
     border-radius: 50%;     
+    cursor: pointer;
+
   }
   #form{
+    
     padding: 2rem 0rem 0rem 3rem;
 
   }
