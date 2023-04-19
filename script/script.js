@@ -70,6 +70,7 @@ function renderCards(productsArray) {
             <div class="card__header">
               <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
               <img class="card__thumb" src="${product.image}" alt="" />
+              <div class="card__thumbb" /></div>
               <div class="card__header-text">
                 <h3 class="card__title">${product.name}</h3>            
                 <span class="card__status">Pokedex: ${product.id} | XP Base: ${product.xpbase}</span>
