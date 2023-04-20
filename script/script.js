@@ -29,12 +29,24 @@ class PokemonAPI {
   async fetchRandomPokemonData() {
     const pokemonIds = [];
     while (pokemonIds.length < 10) {
-      const id = getRandomInt(1, 152);
+      const id = getRandomInt(1, 1028);
       if (!pokemonIds.includes(id)) {
         pokemonIds.push(id);
       }
     }
     const products = await Promise.all(pokemonIds.map((id) => this.fetchPokemonData(id)));
+    return products;
+  }
+
+  async fetchInitPokemonData() {
+    const pokemonIds = [];
+    for(var i=1;i<11;i++){
+      const idInit = i;
+      if (!pokemonIds.includes(idInit)) {
+        pokemonIds.push(idInit);
+      }
+    }
+    const products = await Promise.all(pokemonIds.map((idInit) => this.fetchPokemonData(idInit)));
     return products;
   }
 }
@@ -88,11 +100,24 @@ function renderCards(productsArray) {
 const pokemonAPI = new PokemonAPI();
 
 async function fetchAndRenderData() {
+  if(flag <1){
+  const products = await pokemonAPI.fetchInitPokemonData();
+  renderCards(products);
+  flag=21;
+  }
+  else{
   const products = await pokemonAPI.fetchRandomPokemonData();
   renderCards(products);
+  }
+ 
 }
 
+
+var flag=0;
+
 fetchAndRenderData();
+
+
 
 setInterval(() => {
   console.log ("help, we are a group of handicapped people exploited for work without pay")
