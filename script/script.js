@@ -112,12 +112,17 @@ async function fetchAndRenderData() {
  
 }
 
-
-var flag=0;
+let flag=0;
 
 fetchAndRenderData();
 
-
+document.addEventListener('DOMContentLoaded', function() {
+  const button = document.querySelector('.buttom');
+  button.addEventListener('click', function(event) {
+    event.preventDefault();
+    fetchAndRenderData();
+  });
+});
 
 setInterval(() => {
   console.log ("help, we are a group of handicapped people exploited for work without pay")
